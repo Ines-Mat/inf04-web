@@ -2,4 +2,4 @@
 
 Repozytorium z zadaniami z przedmiotu
 
-**Autor:** Ines Matela, klasa 4
+**Autor:** Ines Matela, klasa 5
