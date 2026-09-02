@@ -1,4 +1,4 @@
-# INF 04 - Aplikacje webowe
+# INF 04 - wersja główna
 
 Repozytorium z zadaniami z przedmiotu
 
