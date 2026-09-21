@@ -1,0 +1,11 @@
+1 w terminalu git init
+2 git config -- global(własny)/local(szkolny) user.name
+2 git config -- global(własny)/local(szkolny) user.email
+4 git commit -m 'komentarz'
+
+git status - ostatnie zmiany
+git switch -c NewBranch
+git switch master/main
+git merge NewBranch
+
+git remote and origin 
