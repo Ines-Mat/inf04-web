@@ -3,6 +3,7 @@ import photos from '../data/photos.json'
 import PhotoCard from './PhotoCard.jsx'
 import PhotoModal from './PhotoModal.jsx'
 
+
 function Gallery() {
   return (
     <div id="galeria" className="row g-4">
