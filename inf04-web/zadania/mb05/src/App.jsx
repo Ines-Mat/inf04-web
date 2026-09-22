@@ -24,6 +24,10 @@ function App() {
 
       </div>
     </header>
+      <main className="container">
+        <CategoryBar/>
+        <Gallery/>
+      </main>
     </>
   )
 }
