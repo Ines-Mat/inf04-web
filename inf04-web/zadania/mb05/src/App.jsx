@@ -28,6 +28,7 @@ function App() {
         <CategoryBar/>
         <Gallery/>
       </main>
+      <Footer/>
     </>
   )
 }
