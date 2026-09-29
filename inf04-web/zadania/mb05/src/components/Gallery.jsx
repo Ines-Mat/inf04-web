@@ -10,7 +10,7 @@ function Gallery({zdjecia}) {
       {zdjecia.map(zdjecie => (
         <Fragment key={zdjecie.id}>
           <div className="col-12 col-md-6 col-lg-4">
-            <PhotoCard {...zdjecie} />
+            <PhotoCard {...zdjecie} onUsun={()=> onUsun(zdjecie.id)} />
           </div>
           <PhotoModal {...zdjecie} />
         </Fragment>
