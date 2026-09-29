@@ -10,6 +10,9 @@ import './App.css'
 
 function App() {
   const [zdjecia, setZdjecia] = useState(photos)
+  const [aktywnaKategoria, setAktywnaKategoria] = useState('wszystkie')
+
+  const widoczne = aktywnaKategoria === 'wszystkie' ? zdjecia : zdjecia.filter(z => z.category === aktywnaKategoria)
   
   return (
     <>
