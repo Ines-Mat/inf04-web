@@ -46,9 +46,13 @@ function App() {
     </header>
       <main className="container">
         <CategoryBar aktywna = {aktywnaKategoria} onWybierz={setAktywnaKategoria}/>
+
+        <p className="text-body-secondary">Wyświetlono {widoczne.legth} z {zdjecia.length} zdjęć</p>
+        
         {widoczne.length ===0 &&(
       <div className= "alert alert-warning"> Nie znaleziono zdjęć w tej kategorii</div>
       )}
+
         <Gallery zdjecia = {widoczne} onUsun= {usunZdjecie}/>
       </main>
       <Footer/>
