@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar.jsx'
-import CategoryBar from './components?CategoryBar.jsx'
+import CategoryBar from './components/CategoryBar.jsx'
 import Gallery from './components/Gallery.jsx'
 import AddPhotoModal from './components/AddPhotoModal.jsx'
 import FiltersOffcanvas from './components/FiltersOffcanvas.jsx'
