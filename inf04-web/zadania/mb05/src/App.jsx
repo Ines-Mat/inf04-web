@@ -17,6 +17,12 @@ function dodajZdjecie(nowe){
   setZdjecia([...zdjecia, {...nowe, id: noweid, favorite: false}])
 }
 
+function przelaczUlubione(id){
+  setZdjecia(
+    zdjecie.map(z => (z.id === id? {...z, favorite: !z.favorite} : z))
+  )
+}
+
 function App() {
   const [zdjecia, setZdjecia] = useState(photos)
   const [aktywnaKategoria, setAktywnaKategoria] = useState('wszystkie')
