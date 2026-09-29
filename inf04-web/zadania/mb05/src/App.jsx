@@ -12,6 +12,11 @@ function usunZdjecie(id){
   setZdjecia(zdjecia.filter(z => z.id !== id))
 }
 
+function dodajZdjecie(nowe){
+  const noweId = Math.max(...zdjecia.map(z=> z.id))+1
+  setZdjecia([...zdjecia, {...nowe, id: noweid, favorite: false}])
+}
+
 function App() {
   const [zdjecia, setZdjecia] = useState(photos)
   const [aktywnaKategoria, setAktywnaKategoria] = useState('wszystkie')
@@ -48,7 +53,7 @@ function App() {
       </main>
       <Footer/>
 
-      <AddPhotoModal/>
+      <AddPhotoModal onDodaj={dodajZdjecie}/>
       <FiltersOffcanvas aktywna={aktywnaKategoria} onWybierz={setAktywnaKategoria}/>
     </>
   )
