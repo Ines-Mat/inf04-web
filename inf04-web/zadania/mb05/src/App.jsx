@@ -59,7 +59,7 @@ function App() {
       <div className= "alert alert-warning"> Nie znaleziono zdjęć w tej kategorii</div>
       )}
 
-        <Gallery zdjecia = {widoczne} onUsun= {usunZdjecie}/>
+        <Gallery zdjecia = {widoczne} onUsun= {usunZdjecie} onPrzelacz={przelaczUlubione}/>
       </main>
       <Footer/>
 
