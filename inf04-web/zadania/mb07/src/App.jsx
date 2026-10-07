@@ -11,8 +11,9 @@ function App() {
   const imieNazwiskoRef = useRef(null)
   const numerKursuRef = useRef(null)
   const [szukaj,setSzukaj] = useState('')
+  const [rosnaco, setRosnaco] = useState(true)
 
-    const widoczne = kursy.map((kurs,index)=>({kurs, numer: index +1})).filter(({kurs})=> kurs.toLowerCase().includes(szukaj.toLowerCase()))
+  const widoczne = kursy.map((kurs,index)=>({kurs, numer: index +1})).filter(({kurs})=> kurs.toLowerCase().includes(szukaj.toLowerCase())).sort((a,b)=> rosnaco? a.kurs.localeCompare(b.kurs): b.kurs.localeCompare(a.kurs))
 
 
   function handleSubmit(event) {
@@ -45,6 +46,13 @@ function App() {
           <li key={index} value={index}>{kurs}</li>
         ))}
       </ol>
+
+        <div className='d-flex gap-2 mb-2'>
+            <input type='text' className='form-control' placeholder='Szukaj kusru...' value={szukaj} onChange={e=> setSzukaj(e.target.value)}>
+            </input>
+            <button className='btn btn-outline-secondary text-nowrap' onClick={()=> setRosnaco(!rosnaco)}></button>
+        </div>
+
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
