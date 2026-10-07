@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const kursy = [
   'Programowanie w C#',
@@ -10,6 +10,10 @@ const kursy = [
 function App() {
   const imieNazwiskoRef = useRef(null)
   const numerKursuRef = useRef(null)
+  const [szukaj,setSzukaj] = useState('')
+
+    const widoczne = kursy.map((kurs,index)=>({kurs, numer: index +1})).filter(({kurs})=> kurs.toLowerCase().includes(szukaj.toLowerCase()))
+
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -32,9 +36,13 @@ function App() {
       <h1 className="h3 mb-4">Zapisy na kursy</h1>
 
       <h2 className="h5">Liczba kursów: {kursy.length}</h2>
+      
+      <input type='text' className='form-control mb-2' placeholder='Szukaj kursu...' value={szukaj} onChange={e => setSzukaj(e.target.value)}>
+      </input>
+      
       <ol>
-        {kursy.map((kurs, index) => (
-          <li key={index}>{kurs}</li>
+        {widoczne.map((kurs, index) => (
+          <li key={index} value={index}>{kurs}</li>
         ))}
       </ol>
 
