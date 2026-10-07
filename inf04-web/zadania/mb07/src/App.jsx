@@ -37,6 +37,7 @@ function App() {
       <h1 className="h3 mb-4">Zapisy na kursy</h1>
 
       <h2 className="h5">Liczba kursów: {kursy.length}</h2>
+      <p className='text-body-secondary'> Znaleziono {widoczne.length} z {kursy.length} kursów</p>
       
       <input type='text' className='form-control mb-2' placeholder='Szukaj kursu...' value={szukaj} onChange={e => setSzukaj(e.target.value)}>
       </input>
@@ -50,7 +51,9 @@ function App() {
         <div className='d-flex gap-2 mb-2'>
             <input type='text' className='form-control' placeholder='Szukaj kusru...' value={szukaj} onChange={e=> setSzukaj(e.target.value)}>
             </input>
-            <button className='btn btn-outline-secondary text-nowrap' onClick={()=> setRosnaco(!rosnaco)}></button>
+            <button className='btn btn-outline-secondary text-nowrap' onClick={()=> setRosnaco(!rosnaco)}>
+              Sortuj {rosnaco? 'Z-> A': 'A-> Z'}
+            </button>
         </div>
 
 
