@@ -1,121 +1,120 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useRef, useState } from 'react'
+
+const kursy = [
+  'Programowanie w C#',
+  'Angular dla początkujących',
+  'Kurs Django',
+  'Wprowadzenie do SQL',
+]
 
 function App() {
-  const [count, setCount] = useState(0)
+  const imieNazwiskoRef = useRef(null)
+  const numerKursuRef = useRef(null)
+  const [szukaj, setSzukaj] = useState('')
+  const [rosnaco, setRosnaco] = useState(true)
+  
+  // 1. Dodanie stanu statusu z obrazka
+  const [status, setStatus] = useState(null)
+
+  const widoczne = kursy
+    .map((kurs, index) => ({ kurs, numer: index + 1 }))
+    .filter(({ kurs }) => kurs.toLowerCase().includes(szukaj.toLowerCase()))
+    .sort((a, b) =>
+      rosnaco ? a.kurs.localeCompare(b.kurs) : b.kurs.localeCompare(a.kurs)
+    )
+
+  // 2. Aktualizacja funkcji obsługi formularza o ustawianie statusu
+  function handleSubmit(event) {
+    event.preventDefault()
+
+    const imienazwisko = imieNazwiskoRef.current.value
+    const numerkursu = Number(numerKursuRef.current.value)
+    const kurs = kursy[numerkursu - 1]
+
+    console.log(imienazwisko)
+
+    if (kurs !== undefined) {
+      console.log(kurs)
+      setStatus({
+        typ: 'sukces',
+        tresc: `${imienazwisko} zapisany(-a) na kurs: ${kurs}`,
+      })
+    } else {
+      console.log('Nieprawidłowy numer kursu')
+      setStatus({ typ: 'blad', tresc: 'Nieprawidłowy numer kursu' })
+    }
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
+    <div className="container py-4" style={{ maxWidth: 600 }}>
+      <h1 className="h3 mb-4">Zapisy na kursy</h1>
+
+      <h2 className="h5">Liczba kursów: {kursy.length}</h2>
+      <p className="text-body-secondary">
+        Znaleziono {widoczne.length} z {kursy.length} kursów
+      </p>
+
+      <div className="d-flex gap-2 mb-2">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Szukaj kursu..."
+          value={szukaj}
+          onChange={(e) => setSzukaj(e.target.value)}
+        />
         <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          className="btn btn-outline-secondary text-nowrap"
+          onClick={() => setRosnaco(!rosnaco)}
         >
-          Count is {count}
+          Sortuj {rosnaco ? 'Z-> A' : 'A-> Z'}
         </button>
-      </section>
+      </div>
 
-      <div className="ticks"></div>
+      <ol>
+        {widoczne.map((item, index) => (
+          <li key={index}>{item.kurs}</li>
+        ))}
+      </ol>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="imienazwisko">Imię i nazwisko:</label>
+          <input
+            type="text"
+            id="imienazwisko"
+            className="form-control"
+            ref={imieNazwiskoRef}
+          />
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <div className="form-group mt-2">
+          <label htmlFor="numerkursu">Numer kursu:</label>
+          <input
+            type="number"
+            id="numerkursu"
+            className="form-control"
+            ref={numerKursuRef}
+          />
+        </div>
+
+        <div className="form-group mt-3">
+          <button type="submit" className="btn btn-primary">
+            Zapisz do kursu
+          </button>
+        </div>
+      </form>
+
+      {/* 3. Dodanie wyświetlania komunikatu pod formularzem */}
+      {status && (
+        <div
+          className={`alert mt-3 alert-${
+            status.typ === 'sukces' ? 'success' : 'danger'
+          }`}
+        >
+          {status.tresc}
+        </div>
+      )}
+    </div>
   )
 }
 
