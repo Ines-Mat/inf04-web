@@ -10,12 +10,20 @@ const kursy = [
 function App() {
   const imieNazwiskoRef = useRef(null)
   const numerKursuRef = useRef(null)
-  const [szukaj,setSzukaj] = useState('')
+  const [szukaj, setSzukaj] = useState('')
   const [rosnaco, setRosnaco] = useState(true)
+  
+  // 1. Dodanie stanu statusu z obrazka
+  const [status, setStatus] = useState(null)
 
-  const widoczne = kursy.map((kurs,index)=>({kurs, numer: index +1})).filter(({kurs})=> kurs.toLowerCase().includes(szukaj.toLowerCase())).sort((a,b)=> rosnaco? a.kurs.localeCompare(b.kurs): b.kurs.localeCompare(a.kurs))
+  const widoczne = kursy
+    .map((kurs, index) => ({ kurs, numer: index + 1 }))
+    .filter(({ kurs }) => kurs.toLowerCase().includes(szukaj.toLowerCase()))
+    .sort((a, b) =>
+      rosnaco ? a.kurs.localeCompare(b.kurs) : b.kurs.localeCompare(a.kurs)
+    )
 
-
+  // 2. Aktualizacja funkcji obsługi formularza o ustawianie statusu
   function handleSubmit(event) {
     event.preventDefault()
 
@@ -27,8 +35,13 @@ function App() {
 
     if (kurs !== undefined) {
       console.log(kurs)
+      setStatus({
+        typ: 'sukces',
+        tresc: `${imienazwisko} zapisany(-a) na kurs: ${kurs}`,
+      })
     } else {
       console.log('Nieprawidłowy numer kursu')
+      setStatus({ typ: 'blad', tresc: 'Nieprawidłowy numer kursu' })
     }
   }
 
@@ -37,23 +50,31 @@ function App() {
       <h1 className="h3 mb-4">Zapisy na kursy</h1>
 
       <h2 className="h5">Liczba kursów: {kursy.length}</h2>
-      <p className='text-body-secondary'> Znaleziono {widoczne.length} z {kursy.length} kursów</p>
-      
-              <div className='d-flex gap-2 mb-2'>
-            <input type='text' className='form-control' placeholder='Szukaj kursu...' value={szukaj} onChange={e=> setSzukaj(e.target.value)}>
-            </input>
-            <button className='btn btn-outline-secondary text-nowrap' onClick={()=> setRosnaco(!rosnaco)}>
-              Sortuj {rosnaco? 'Z-> A': 'A-> Z'}
-            </button>
-        </div>
-      
+      <p className="text-body-secondary">
+        Znaleziono {widoczne.length} z {kursy.length} kursów
+      </p>
+
+      <div className="d-flex gap-2 mb-2">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Szukaj kursu..."
+          value={szukaj}
+          onChange={(e) => setSzukaj(e.target.value)}
+        />
+        <button
+          className="btn btn-outline-secondary text-nowrap"
+          onClick={() => setRosnaco(!rosnaco)}
+        >
+          Sortuj {rosnaco ? 'Z-> A' : 'A-> Z'}
+        </button>
+      </div>
+
       <ol>
-  {widoczne.map((item, index) => (
-    <li key={index}>{item.kurs}</li>
-  ))}
-</ol>
-
-
+        {widoczne.map((item, index) => (
+          <li key={index}>{item.kurs}</li>
+        ))}
+      </ol>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -82,6 +103,17 @@ function App() {
           </button>
         </div>
       </form>
+
+      {/* 3. Dodanie wyświetlania komunikatu pod formularzem */}
+      {status && (
+        <div
+          className={`alert mt-3 alert-${
+            status.typ === 'sukces' ? 'success' : 'danger'
+          }`}
+        >
+          {status.tresc}
+        </div>
+      )}
     </div>
   )
 }
