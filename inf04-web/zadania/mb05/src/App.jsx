@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar.jsx'
 import CategoryBar from './components/CategoryBar.jsx'
 import Gallery from './components/Gallery.jsx'
@@ -14,6 +14,23 @@ const PUSTY_FORMULARZ = {
   alt: '',
   description: ''
 }
+  useEffect(()=>{
+    async function pobierzZdjecia(){
+      try{
+        const odpowiedz = await fetch('/photo.json')
+        if(!odpowiedz.ok){
+          throw new Error ("Błąd serwera: "+  odpowiedz.status)
+        }
+        const dane = await odpowiedz.json()
+        setZdjecia(dane)
+
+      }catch(err){
+        console.log(err.message)
+      }
+    }
+    pobierzZdjecia()
+  }, [])
+
 
 function App() {
   const [zdjecia, setZdjecia] = useState([])
