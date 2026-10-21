@@ -30,8 +30,29 @@ function ZdjecieDnia() {
   }, [id])
 
   return (
-    <div>
-      <p>Zdjęcie dnia - tu dopiero będzie widok</p>
+    <div className="container mt-5 mb-5">
+      <h2>Zdjęcie dnia</h2>
+
+      {error && <div className="alert alert-danger">Błąd: {error}</div>}
+
+      {zdjecie && (
+        <>
+          <img
+            src={`https://picsum.photos/id/${id}/400/250`}
+            className="img-fluid rounded"
+            alt={zdjecie.author}
+          />
+          <p className="text-muted mt-2">Autor: {zdjecie.author}</p>
+        </>
+      )}
+
+      <button
+        className="btn btn-outline-primary"
+        disabled={isLoading}
+        onClick={() => setId(losowaId())}
+      >
+        {isLoading ? 'Losuję...' : 'Losuj nowe zdjęcie'}
+      </button>
     </div>
   )
 }
