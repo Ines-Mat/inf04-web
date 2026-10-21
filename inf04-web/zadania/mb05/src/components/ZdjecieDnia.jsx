@@ -3,6 +3,11 @@ import { useState, useEffect } from 'react'
 function losowaId() {
   return Math.floor(Math.random() * 300)
 }
+
+// Osobna sekcja, niezależna od głównej galerii — własny stan, własny
+// useEffect, własne isLoading/error. Zmiana `id` po kliknięciu "Losuj"
+// uruchamia efekt ponownie, dokładnie jak zmiana licznikA/licznikB
+// w przykładzie z Licznikami w MB8 (sekcja 2 teorii).
 function ZdjecieDnia() {
   const [id, setId] = useState(losowaId)
   const [zdjecie, setZdjecie] = useState(null)
@@ -19,6 +24,10 @@ function ZdjecieDnia() {
         setZdjecie(dane)
         setError(null)
       } catch (err) {
+        // Picsum ma dziury w numeracji id (nie każde id w zakresie istnieje),
+        // więc błąd 404 tu jest realny, nie tylko teoretyczny. Nie robimy
+        // wczesnego return — przycisk musi zostać widoczny, żeby dało się
+        // wylosować kolejne id, zamiast utknąć na ekranie błędu.
         setError(err.message)
         setZdjecie(null)
       } finally {
