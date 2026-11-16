@@ -20,5 +20,14 @@ describe('Gallery', () => {
     expect(screen.getAllByRole('link', { name: 'Powiększ' })).toHaveLength(3)
   })
 
+it('nie renderuje żadnej karty dla pustej listy', () => {
+    render(
+      <MemoryRouter>
+        <Gallery zdjecia={[]} onUsun={() => {}} onPrzelacz={() => {}} />
+      </MemoryRouter>
+    )
+
+    expect(screen.queryAllByRole('link', { name: 'Powiększ' })).toHaveLength(0)
+  })
 
 })
